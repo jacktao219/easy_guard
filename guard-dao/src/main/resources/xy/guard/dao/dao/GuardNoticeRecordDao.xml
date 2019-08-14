@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xy.guard.dao.dao.GuardNoticeRecordDao">
+  <resultMap id="BaseResultMap" type="xy.guard.dao.vo.GuardNoticeRecordVo">
+    <!--@mbg.generated-->
+    <id column="notice_record_id" jdbcType="INTEGER" property="noticeRecordId" />
+    <result column="notice_define_id" jdbcType="INTEGER" property="noticeDefineId" />
+    <result column="guard_record_id" jdbcType="INTEGER" property="guardRecordId" />
+    <result column="notice_status" jdbcType="VARCHAR" property="noticeStatus" />
+    <result column="notice_remark" jdbcType="VARCHAR" property="noticeRemark" />
+    <result column="warn_channel" jdbcType="VARCHAR" property="warnChannel" />
+    <result column="warn_notice_target" jdbcType="VARCHAR" property="warnNoticeTarget" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    notice_record_id, notice_define_id, guard_record_id, notice_status, notice_remark, 
+    warn_channel, warn_notice_target, create_time, update_time
+  </sql>
+</mapper>

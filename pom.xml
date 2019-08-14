@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.1.6.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>com.ambitor.framework</groupId>
+  <artifactId>easy-guard</artifactId>
+  <version>1.0.0</version>
+  <name>easy-guard</name>
+  <description>任务服务</description>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>guard-api</module>
+    <module>guard-dao</module>
+    <module>guard-service</module>
+  </modules>
+
+  <properties>
+    <guard.server.version>1.0.0</guard.server.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+    <aspectj.version>1.8.9</aspectj.version>
+    <mysql-connector-java.version>5.1.42</mysql-connector-java.version>
+    <druid-spring-boot-starter.version>1.1.18</druid-spring-boot-starter.version>
+    <druid.version>1.1.18</druid.version>
+    <xxl.version>2.0.2</xxl.version>
+    <spring.data.redis.version>2.1.3.RELEASE</spring.data.redis.version>
+    <fastjson.version>1.2.58</fastjson.version>
+    <commons-lang3.version>3.9</commons-lang3.version>
+    <lombok.version>1.16.16</lombok.version>
+    <common-core.version>1.0.0</common-core.version>
+    <common-data.version>1.0.0</common-data.version>
+    <common-web.version>1.0.0</common-web.version>
+    <msg-client.version>1.0.0</msg-client.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.ctrip.framework.apollo</groupId>
+      <artifactId>apollo-client</artifactId>
+      <version>1.1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+      <version>${spring.data.redis.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>xy</groupId>
+      <artifactId>common-web</artifactId>
+      <version>${common-web.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-properties-migrator</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-log4j2</artifactId>
+      <version>2.1.2.RELEASE</version>
+    </dependency>
+
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>alimaven</id>
+      <name>aliyun maven</name>
+      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.20</version>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <distributionManagement>
+    <repository>
+      <id>nexus-releases</id>
+      <name>jn-maven-public-release</name>
+      <url>http://maven.tengsaw.cn:9081/repository/xy-maven-public/</url>
+    </repository>
+  </distributionManagement>
+
+
+</project>

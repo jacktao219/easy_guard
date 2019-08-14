@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xy.guard.dao.dao.GuardRecordDao">
+  <resultMap id="BaseResultMap" type="xy.guard.dao.vo.GuardRecordVo">
+    <!--@mbg.generated-->
+    <id column="guard_record_id" jdbcType="INTEGER" property="guardRecordId" />
+    <result column="guard_define_id" jdbcType="INTEGER" property="guardDefineId" />
+    <result column="system" jdbcType="VARCHAR" property="system" />
+    <result column="guard_name" jdbcType="VARCHAR" property="guardName" />
+    <result column="guard_type" jdbcType="VARCHAR" property="guardType" />
+    <result column="guard_evaluate" jdbcType="VARCHAR" property="guardEvaluate" />
+    <result column="evaluate_expect" jdbcType="VARCHAR" property="evaluateExpect" />
+    <result column="evaluate_result" jdbcType="VARCHAR" property="evaluateResult" />
+    <result column="exec_result" jdbcType="VARCHAR" property="execResult" />
+    <result column="exec_remark" jdbcType="VARCHAR" property="execRemark" />
+    <result column="frequency" jdbcType="VARCHAR" property="frequency" />
+    <result column="warn_notice_msg" jdbcType="VARCHAR" property="warnNoticeMsg" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    guard_record_id, guard_define_id, `system`, guard_name, guard_type, guard_evaluate, 
+    evaluate_expect, evaluate_result, exec_result, exec_remark, frequency, warn_notice_msg, 
+    create_time, update_time
+  </sql>
+</mapper>
