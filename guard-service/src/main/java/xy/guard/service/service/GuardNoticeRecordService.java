@@ -24,7 +24,8 @@ public class GuardNoticeRecordService extends ServiceImpl<GuardNoticeRecordDao, 
     /**
      * 保存
      */
-    public boolean save(GuardNoticeDefineVo guardNoticeDefine, String status, Integer guardRecordId, String remark) {
+    public boolean save(GuardNoticeDefineVo guardNoticeDefine, String target, String status, Integer guardRecordId,
+        String remark) {
         GuardNoticeRecordVo record = new GuardNoticeRecordVo();
         LocalDateTime now = LocalDateTime.now();
         record.setCreateTime(now);
@@ -32,24 +33,25 @@ public class GuardNoticeRecordService extends ServiceImpl<GuardNoticeRecordDao, 
         record.setNoticeDefineId(guardNoticeDefine.getNoticeDefineId());
         record.setNoticeStatus(status);
         record.setNoticeRemark(remark);
+        record.setGuardName(guardNoticeDefine.getGuardName());
         record.setUpdateTime(now);
         record.setWarnChannel(guardNoticeDefine.getWarnChannel());
-        record.setWarnNoticeTarget(guardNoticeDefine.getWarnNoticeTarget());
+        record.setWarnNoticeTarget(target);
         return save(record);
     }
 
     /**
      * 是否重复通知
      */
-    public boolean repeatWarn(Integer noticeDefineId) {
-        LocalDateTime repeatTime = LocalDateTime.now().plusHours(-guardApolloConfig.getRepeatWarnTime());
+    public boolean repeatWarn(Integer noticeDefineId, Integer repeatGap) {
+        LocalDateTime repeatTime = LocalDateTime.now().plusMinutes(-repeatGap);
         LambdaQueryWrapper<GuardNoticeRecordVo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(GuardNoticeRecordVo::getNoticeDefineId, noticeDefineId)
-            .ge(GuardNoticeRecordVo::getCreateTime, repeatTime).orderByDesc(GuardNoticeRecordVo::getCreateTime)
-            .last("LIMIT 1");
+            .ge(GuardNoticeRecordVo::getCreateTime, repeatTime).last("LIMIT 1");
         return count(queryWrapper) > 0;
     }
 }
+
 
 
 

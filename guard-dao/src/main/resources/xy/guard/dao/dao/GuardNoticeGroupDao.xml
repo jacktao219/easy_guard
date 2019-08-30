@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xy.guard.dao.dao.GuardNoticeGroupDao">
+  <resultMap id="BaseResultMap" type="xy.guard.dao.vo.GuardNoticeGroupVo">
+    <!--@mbg.generated-->
+    <id column="notice_group_id" jdbcType="INTEGER" property="noticeGroupId" />
+    <result column="notice_group_name" jdbcType="VARCHAR" property="noticeGroupName" />
+    <result column="notice_group_code" jdbcType="VARCHAR" property="noticeGroupCode" />
+    <result column="target_type" jdbcType="VARCHAR" property="targetType" />
+    <result column="target_value" jdbcType="VARCHAR" property="targetValue" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    notice_group_id, notice_group_name, notice_group_code, target_type, target_value, 
+    create_time
+  </sql>
+</mapper>

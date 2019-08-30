@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,10 +21,13 @@ import xy.common.web.http.HttpUtils;
 import xy.guard.dao.datasource.DataSourceHolder;
 import xy.guard.dao.vo.GuardDefineVo;
 import xy.guard.dao.vo.GuardNoticeDefineVo;
+import xy.guard.dao.vo.GuardNoticeGroupVo;
 import xy.guard.dao.vo.GuardRecordVo;
+import xy.guard.service.enumerate.GuardGroupType;
 import xy.guard.service.enumerate.GuardType;
 import xy.guard.service.enumerate.WarnNoticeResult;
 import xy.guard.service.service.GuardNoticeDefineService;
+import xy.guard.service.service.GuardNoticeGroupService;
 import xy.guard.service.service.GuardNoticeRecordService;
 import xy.msg.client.service.MessageClientService;
 import xy.msg.client.vo.WarnMsgReqVo;
@@ -43,6 +47,8 @@ public class GuardSchedulerService {
     private MessageClientService messageClientService;
     @Autowired
     private GuardNoticeRecordService noticeRecordService;
+    @Autowired
+    private GuardNoticeGroupService guardNoticeGroupService;
 
     /**
      * 开始调度
@@ -70,13 +76,13 @@ public class GuardSchedulerService {
         if (GuardType.sql.name().equals(guardType)) {
             response = queryDb(guardDefine);
             warnNoticeMsg = MessageFormat.format(warnNoticeMsg, response);
-            if (response > 0) {
+            if (!String.valueOf(response).equals(guardDefine.getEvaluateExpect())) {
                 notice(guardDefine, guardRecord.getGuardRecordId(), warnNoticeMsg);
             }
         } else if (GuardType.http.name().equals(guardType)) {
             response = http(guardDefine);
             warnNoticeMsg = MessageFormat.format(warnNoticeMsg, response);
-            if (response != HttpStatus.SC_OK) {
+            if (!String.valueOf(response).equals(guardDefine.getEvaluateExpect())) {
                 notice(guardDefine, guardRecord.getGuardRecordId(), warnNoticeMsg);
             }
         } else {
@@ -149,21 +155,48 @@ public class GuardSchedulerService {
         warnMsgReqVo.setContent(warnNoticeMsg);
         reqVo.setData(warnMsgReqVo);
         for (GuardNoticeDefineVo noticeDefine : noticeDefines) {
-            boolean repeatWarn = noticeRecordService.repeatWarn(noticeDefine.getNoticeDefineId());
-            String target = noticeDefine.getWarnNoticeTarget();
+            String groupCode = noticeDefine.getWarnNoticeTarget();
+            Integer noticeDefineId = noticeDefine.getNoticeDefineId();
+            String guardName = guardDefine.getGuardName();
+            Integer repeatGap = guardDefine.getRepeatGap();
+            boolean repeatWarn = noticeRecordService.repeatWarn(noticeDefineId, repeatGap);
             if (repeatWarn) {
-                log.info("最近有发送过信息不重复推送 guardDefine:{} target:{}", guardDefine.getGuardName(), target);
+                log.info("最近有发送过信息不重复推送 guardDefine:{} target:{}", guardName, repeatGap);
                 continue;
             }
-            try {
-                warnMsgReqVo.setMobile(target);
-                messageClientService.sendWarnMsg(reqVo);
-                log.info("发送告警短信成功 target:{} guardName:{}", target, guardDefine.getGuardName());
-                noticeRecordService.save(noticeDefine, WarnNoticeResult.success.name(), guardRecordId, null);
-            } catch (Exception e) {
-                log.error("发送短信失败 target:{} guardName:{}", target, guardDefine.getGuardName());
-                noticeRecordService.save(noticeDefine, WarnNoticeResult.failed.name(), guardRecordId, e.getMessage());
+            List<GuardNoticeGroupVo> groupVos = guardNoticeGroupService.list(groupCode);
+            if (CollectionUtils.isEmpty(groupVos)) {
+                log.warn("请配置告警组 guardDefine:{}  groupCode:{}", guardName, groupCode);
+                continue;
             }
+            for (GuardNoticeGroupVo groupVo : groupVos) {
+                String target = groupVo.getTargetValue();
+                String type = groupVo.getTargetType();
+                if (GuardGroupType.mobile.name().equals(type)) {
+                    warnMsgReqVo.setMobile(target);
+                    guardByMessage(guardRecordId, reqVo, warnMsgReqVo, noticeDefine);
+                } else {
+                    log.warn("暂不支持除短信以外告警方式");
+                }
+            }
+        }
+    }
+
+    /**
+     * 短信通知
+     */
+    private void guardByMessage(Integer guardRecordId, BaseRequestVo<WarnMsgReqVo> reqVo, WarnMsgReqVo warnMsgReqVo,
+        GuardNoticeDefineVo noticeDefine) {
+        String target = warnMsgReqVo.getMobile();
+        String guardName = noticeDefine.getGuardName();
+        try {
+            messageClientService.sendWarnMsg(reqVo);
+            log.info("发送告警短信成功 target:{} guardName:{}", target, guardName);
+            noticeRecordService.save(noticeDefine, target, WarnNoticeResult.success.name(), guardRecordId, null);
+        } catch (Exception e) {
+            log.error("发送短信失败 target:{} guardName:{}", target, guardName);
+            noticeRecordService
+                .save(noticeDefine, target, WarnNoticeResult.failed.name(), guardRecordId, e.getMessage());
         }
     }
 }

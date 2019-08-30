@@ -129,13 +129,4 @@
     </plugins>
   </build>
 
-  <distributionManagement>
-    <repository>
-      <id>nexus-releases</id>
-      <name>jn-maven-public-release</name>
-      <url>http://maven.tengsaw.cn:9081/repository/xy-maven-public/</url>
-    </repository>
-  </distributionManagement>
-
-
 </project>

@@ -5,6 +5,7 @@
     <!--@mbg.generated-->
     <id column="notice_define_id" jdbcType="INTEGER" property="noticeDefineId" />
     <result column="guard_define_id" jdbcType="INTEGER" property="guardDefineId" />
+    <result column="guard_name" jdbcType="VARCHAR" property="guardName" />
     <result column="warn_channel" jdbcType="VARCHAR" property="warnChannel" />
     <result column="warn_notice_target" jdbcType="VARCHAR" property="warnNoticeTarget" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -12,7 +13,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    notice_define_id, guard_define_id, warn_channel, warn_notice_target, create_time, 
-    update_time
+    notice_define_id, guard_define_id, guard_name, warn_channel, warn_notice_target, 
+    create_time, update_time
   </sql>
 </mapper>

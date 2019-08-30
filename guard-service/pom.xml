@@ -8,8 +8,8 @@
   <description>任务service</description>
 
   <parent>
-    <groupId>xy</groupId>
-    <artifactId>guard-server</artifactId>
+    <groupId>com.ambitor.framework</groupId>
+    <artifactId>easy-guard</artifactId>
     <version>1.0.0</version>
   </parent>
 

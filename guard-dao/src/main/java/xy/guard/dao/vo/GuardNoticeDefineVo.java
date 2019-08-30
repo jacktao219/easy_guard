@@ -18,6 +18,12 @@ public class GuardNoticeDefineVo {
     private Integer guardDefineId;
 
     /**
+     * 告警名称
+     */
+    @TableField(value = "guard_name")
+    private String guardName;
+
+    /**
      * message:短信 email:邮件
      */
     @TableField(value = "warn_channel")
@@ -36,6 +42,8 @@ public class GuardNoticeDefineVo {
     private LocalDateTime updateTime;
 
     public static final String COL_GUARD_DEFINE_ID = "guard_define_id";
+
+    public static final String COL_GUARD_NAME = "guard_name";
 
     public static final String COL_WARN_CHANNEL = "warn_channel";
 

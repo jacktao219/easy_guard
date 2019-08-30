@@ -52,6 +52,12 @@ public class GuardDefineVo {
     private String frequency;
 
     /**
+     * 多少分钟内不重复告警，默认30分钟
+     */
+    @TableField(value = "repeat_gap")
+    private Integer repeatGap;
+
+    /**
      * 告警内容
      */
     @TableField(value = "warn_notice_msg")
@@ -74,6 +80,8 @@ public class GuardDefineVo {
     public static final String COL_EVALUATE_EXPECT = "evaluate_expect";
 
     public static final String COL_FREQUENCY = "frequency";
+
+    public static final String COL_REPEAT_GAP = "repeat_gap";
 
     public static final String COL_WARN_NOTICE_MSG = "warn_notice_msg";
 

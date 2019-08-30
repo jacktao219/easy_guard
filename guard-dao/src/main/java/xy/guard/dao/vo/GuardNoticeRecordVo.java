@@ -21,6 +21,12 @@ public class GuardNoticeRecordVo {
     private Integer guardRecordId;
 
     /**
+     * 告警名称
+     */
+    @TableField(value = "guard_name")
+    private String guardName;
+
+    /**
      * 通知到达
      */
     @TableField(value = "notice_status")
@@ -53,6 +59,8 @@ public class GuardNoticeRecordVo {
     public static final String COL_NOTICE_DEFINE_ID = "notice_define_id";
 
     public static final String COL_GUARD_RECORD_ID = "guard_record_id";
+
+    public static final String COL_GUARD_NAME = "guard_name";
 
     public static final String COL_NOTICE_STATUS = "notice_status";
 

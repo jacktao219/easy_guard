@@ -10,6 +10,7 @@
     <result column="guard_evaluate" jdbcType="VARCHAR" property="guardEvaluate" />
     <result column="evaluate_expect" jdbcType="VARCHAR" property="evaluateExpect" />
     <result column="frequency" jdbcType="VARCHAR" property="frequency" />
+    <result column="repeat_gap" jdbcType="INTEGER" property="repeatGap" />
     <result column="warn_notice_msg" jdbcType="VARCHAR" property="warnNoticeMsg" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -17,6 +18,6 @@
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     guard_define_id, `system`, guard_name, guard_type, guard_evaluate, evaluate_expect, 
-    frequency, warn_notice_msg, create_time, update_time
+    frequency, repeat_gap, warn_notice_msg, create_time, update_time
   </sql>
 </mapper>

@@ -25,13 +25,7 @@ public class GuardScheduler implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         // Creates a Scheduler instance.
-        Scheduler s = new Scheduler() {
-            @Override
-            public String getGuid() {
-                return "GuardScheduler";
-            }
-        };
-
+        Scheduler s = new Scheduler();
         // Task Collector
         s.addTaskCollector(guardTaskCollector);
         // Daemon Thread

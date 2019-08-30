@@ -15,6 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class GuardApolloConfig {
 
-    @Value("${repeat.warn.time:1}")
+    @Value("${repeat.warn.time:30}")
     private Integer repeatWarnTime;
 }

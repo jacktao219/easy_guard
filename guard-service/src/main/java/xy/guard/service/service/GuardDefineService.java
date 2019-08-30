@@ -7,12 +7,14 @@ import xy.guard.dao.vo.GuardDefineVo;
 
 /**
  * GuardDefineService
+ *
  * @author Ambitor
  */
 @Service
 public class GuardDefineService extends ServiceImpl<GuardDefineDao, GuardDefineVo> {
 
 }
+
 
 
 
